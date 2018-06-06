@@ -4,6 +4,7 @@ import person.Student;
 import person.consciousness.Knowledge;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,6 +21,6 @@ public class HardcodedStudentsRepository implements StudentsRepository {
         student3.setKnowledge(new Knowledge(9));
 
 
-        return Arrays.asList(student1, student2, student3);
+        return new ArrayList<>(Arrays.asList(student1, student2, student3));
     }
 }
