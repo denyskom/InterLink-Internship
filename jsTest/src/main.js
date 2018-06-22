@@ -1,9 +1,9 @@
 // fetch
 const studentsUrl = 'http://localhost:3000/students';
 function init() {
-
+    window.addEventListener(onload,renderStudents(hardcodedStudents));
 }
-// window.onload = init;
+window.onload = init;
 
 var Student = function (name, grade) {
     this.name = name;
