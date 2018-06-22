@@ -1,5 +1,14 @@
-{ "students":[
-  {"name":"Vasiliy" , "grade":"7"},
-  {"name":"Vitaliy" , "grade":"10"}
-]
+{
+  "students": [
+    {
+      "id": 1,
+      "name": "Vasiliy",
+      "grade": "7"
+    },
+    {
+      "id": 2,
+      "name": "Ivan",
+      "grade": "10"
+    }
+  ]
 }
