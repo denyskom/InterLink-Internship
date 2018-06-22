@@ -1,7 +1,7 @@
 const studentsUrl = 'http://localhost:3000/students';
 function init() {
     window.addEventListener(onload,loadStudents().then((data) => renderStudents(data)));
-    document.getElementById('student-form').addEventListener('click', addStudent);
+    document.getElementById('add').addEventListener('click', addStudent);
 }
 window.onload = init;
 
@@ -21,6 +21,7 @@ function loadStudents () {
 function addStudent(e) {
     let studentName = document.getElementById('name').value;
     let studentGrade = document.getElementById('grade').value;
+    console.log(e.elements);
 
     e.preventDefault();
 
@@ -31,22 +32,6 @@ function addStudent(e) {
             'Content-type':'application/json'
         },
         body:JSON.stringify({name:studentName, grade:studentGrade})
-    }).then((res) => loadStudents().then((data) => renderStudents(data)));
+    }).then(() => loadStudents().then((data) => renderStudents(data)));
 
 }
-
-
-
-
-
-
-
-
-// var Student = function (name, grade) {
-//     this.name = name;
-//     this.grade = grade;
-// };
-//
-//
-// var hardcodedStudents = [new Student('Vasiliy', '7'),
-// new Student('Ivan', '8')];
