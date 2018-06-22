@@ -1,0 +1,11 @@
+{
+  "name": "jstest",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "json:server": "json-server --watch db.json"
+  },
+  "dependencies": {
+    "json-server": "^0.14.0"
+  }
+}
