@@ -30,7 +30,7 @@ public class Internship {
 
         StringBuilder passedStudents = new StringBuilder();
         studentsList.stream()
-                .filter(student -> student.getKnowledge().getLevel() > average)
+                .filter(student -> student.getFullExperience().getLevel() > average)
                 .forEach(student -> passedStudents.append(student.getName()).append("\n"));
 
         students = passedStudents.toString();
@@ -38,7 +38,7 @@ public class Internship {
 
     private double countAverageKnowledge(List<Student> studentsList) {
         return studentsList.stream()
-                .mapToDouble(student -> student.getKnowledge().getLevel())
+                .mapToDouble(student -> student.getFullExperience().getLevel())
                 .average().orElse(0);
     }
 }

@@ -1,9 +1,9 @@
 package person.consciousness;
 
 public class Knowledge {
-    private int level;
+    private double level;
 
-    public Knowledge(int level) {
+    public Knowledge(double level) {
         if (level < 0) {
             this.level = 0;
             return;
@@ -12,7 +12,15 @@ public class Knowledge {
         this.level = level;
     }
 
-    public int getLevel() {
+    public double getLevel() {
         return level;
+    }
+
+    public void increaseKnowledge(double level) {
+        this.level += level;
+    }
+
+    public void setLevel(double level) {
+        this.level = level;
     }
 }
