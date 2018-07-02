@@ -1,8 +1,9 @@
 package person;
 
+import institution.KnowledgeSource;
 import person.consciousness.Knowledge;
 
-public class Student {
+public class Student implements KnowledgeSource {
     private String name;
     private Knowledge practicalKnowledge;
     private Knowledge theoryKnowledge;
@@ -42,15 +43,21 @@ public class Student {
     }
 
 
-    public void icreasePracticalKnowledge(double level) {
+    public void increasePracticalKnowledge(double level) {
         practicalKnowledge.increaseKnowledge(level * skillCoefficient);
     }
 
-    public void icreaseTheoryKnowledge(double level) {
+    public void increaseTheoryKnowledge(double level) {
         theoryKnowledge.increaseKnowledge(level * skillCoefficient);
     }
 
     public boolean hasNotebook() {
         return hasNotebook;
+    }
+
+    @Override
+    public void tutor(Student student) {
+        student.increasePracticalKnowledge(3);
+        student.increaseTheoryKnowledge(1);
     }
 }

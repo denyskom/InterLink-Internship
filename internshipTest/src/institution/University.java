@@ -12,6 +12,8 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
     public University(String name) {
         this.name = name;
         this.studentsList = new ArrayList<>();
+        super.practicalKnowledge = 250;
+        super.theoryKnowledge = 1000;
     }
 
     public University(String name, double practicalKnowledge, double theoryKnowledge ) {
@@ -35,20 +37,7 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
         return studentsList;
     }
 
-    @Override
-    public void givePracticalSkills(Student student) {
-        if(isPresent(student)) {
-            student.icreasePracticalKnowledge(practicalKnowledge);
-        }
-    }
 
-    @Override
-    public void giveTheorySkills(Student student) {
-        if(isPresent(student)) {
-            student.icreaseTheoryKnowledge(theoryKnowledge);
-        }
-
-    }
 
     private boolean isPresent(Student student) {
         return studentsList.stream()
@@ -56,4 +45,9 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
     }
 
 
+    @Override
+    public void tutor(Student student) {
+        student.increasePracticalKnowledge(practicalKnowledge);
+        student.increaseTheoryKnowledge(theoryKnowledge);
+    }
 }
