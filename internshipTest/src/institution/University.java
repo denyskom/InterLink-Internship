@@ -10,14 +10,14 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
 //    private List<Student> studentsList;
 
     public University(String name) {
-        this.name = name;
+        super(name);
         this.studentsList = new ArrayList<>();
         super.practicalKnowledge = 250;
         super.theoryKnowledge = 1000;
     }
 
     public University(String name, double practicalKnowledge, double theoryKnowledge ) {
-        this.name = name;
+        super(name);
         this.studentsList = new ArrayList<>();
         super.practicalKnowledge = practicalKnowledge;
         super.theoryKnowledge = theoryKnowledge;
@@ -37,17 +37,11 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
         return studentsList;
     }
 
-
-
-    private boolean isPresent(Student student) {
-        return studentsList.stream()
-                .anyMatch(universityStudent -> universityStudent.getName().equals(student.getName()));
-    }
-
-
     @Override
     public void tutor(Student student) {
-        student.increasePracticalKnowledge(practicalKnowledge);
-        student.increaseTheoryKnowledge(theoryKnowledge);
+        if(isPresent(student)) {
+            student.increasePracticalKnowledge(practicalKnowledge);
+            student.increaseTheoryKnowledge(theoryKnowledge);
+        }
     }
 }

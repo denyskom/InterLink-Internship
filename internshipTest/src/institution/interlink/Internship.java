@@ -8,11 +8,11 @@ import person.Student;
 import java.util.List;
 
 public class Internship extends MassKnowledgeSource implements KnowledgeSource {
-    private String name;
+
     private String students;
 
     public Internship(String name) {
-        this.name = name;
+        super(name);
         this.students = "There is no students";
         super.practicalKnowledge = 1000;
         super.theoryKnowledge = 250;
@@ -48,7 +48,9 @@ public class Internship extends MassKnowledgeSource implements KnowledgeSource {
 
     @Override
     public void tutor(Student student) {
-        student.increaseTheoryKnowledge(super.theoryKnowledge);
-        student.increasePracticalKnowledge(super.practicalKnowledge);
+        if(isPresent(student)) {
+            student.increaseTheoryKnowledge(theoryKnowledge);
+            student.increasePracticalKnowledge(practicalKnowledge);
+        }
     }
 }

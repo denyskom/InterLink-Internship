@@ -16,9 +16,9 @@ public class HardcodedStudentsRepository implements StudentsRepository {
         Student student2 = new Student("Julia Veselkina");
         Student student3 = new Student("Maria Perechrest");
 
-        student1.setKnowledge(new Knowledge(3));
-        student2.setKnowledge(new Knowledge(7));
-        student3.setKnowledge(new Knowledge(9));
+//        student1.setKnowledge(new Knowledge(3));
+//        student2.setKnowledge(new Knowledge(7));
+//        student3.setKnowledge(new Knowledge(9));
 
 
         return new ArrayList<>(Arrays.asList(student1, student2, student3));
