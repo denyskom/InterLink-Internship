@@ -16,6 +16,12 @@ public class Student implements KnowledgeSource {
         this.theoryKnowledge = new Knowledge(0);
     }
 
+    public Student(String name, double practical, double theory) {
+        this.name = name;
+        this.practicalKnowledge = new Knowledge(practical);
+        this.theoryKnowledge = new Knowledge(theory);
+    }
+
     public void setPracticalKnowledge(Knowledge practicalKnowledge) {
         this.practicalKnowledge = practicalKnowledge;
     }
@@ -53,6 +59,15 @@ public class Student implements KnowledgeSource {
 
     public boolean hasNotebook() {
         return hasNotebook;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", practicalKnowledge=" + practicalKnowledge.getLevel() +
+                ", theoryKnowledge=" + theoryKnowledge.getLevel() +
+                '}';
     }
 
     @Override

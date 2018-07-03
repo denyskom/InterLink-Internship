@@ -35,7 +35,11 @@ public class Internship extends MassKnowledgeSource implements KnowledgeSource {
         StringBuilder passedStudents = new StringBuilder();
         studentsList.stream()
                 .filter(student -> student.getFullExperience().getLevel() > average)
-                .forEach(student -> passedStudents.append(student.getName()).append("\n"));
+                .forEach(student -> {
+                    passedStudents.append(student.getName()).append("\n");
+                    this.studentsList.add(student);
+
+                });
 
         students = passedStudents.toString();
     }

@@ -78,25 +78,28 @@ public class DevelopmentPLan {
             return;
         }
 
-        LocalDate executionEnd;
+        LocalDate executionEnd = LocalDate.now();
         LocalDate endDate = schedule.getEndDate();
+
         if(currentDate.isAfter(endDate)) {
             executionEnd = endDate;
         }
 
+
         LocalTime endTime = schedule.getEndTime();
-        if(currentTime.isBefore(endTime)) {
+        if(currentTime.isBefore(endTime)
+                && (currentDate.isBefore(endDate) || currentDate.equals(endDate))) {
             executionEnd = currentDate.minusDays(1);
         }
 
-        executionEnd = currentDate;
 
         LocalDate testDay = startDate;
         do {
             if(isSatisfyingCondition(testDay, schedule)) {
                 entry.getKey().tutor(student);
             }
-        } while (testDay.isBefore(endDate));
+            testDay = testDay.plusDays(1);
+        } while (testDay.isBefore(executionEnd));
 
     }
 }
