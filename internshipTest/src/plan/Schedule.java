@@ -17,6 +17,20 @@ public class Schedule {
         this.conditions = new ArrayList<>();
     }
 
+    public Schedule(LocalDate startDate,
+                    LocalDate endDate,
+                    LocalTime startTime,
+                    LocalTime endTime,
+                    List<BiFunction<LocalDate,
+                            Schedule,
+                            Boolean>> conditions) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.conditions = conditions;
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }

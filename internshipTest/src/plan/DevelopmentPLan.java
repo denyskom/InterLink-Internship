@@ -12,20 +12,18 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 public class DevelopmentPLan {
-    private Map<KnowledgeSource, Schedule> record;
-
+    private Map<KnowledgeSource, Schedule> records;
 
     public DevelopmentPLan() {
-
-        record = new HashMap<>();
+        records = new HashMap<>();
     }
 
     public void addRecord(KnowledgeSource source, Schedule schedule) {
-        record.put(source, schedule);
+        records.put(source, schedule);
     }
 
     public void executePlan(Student student) {
-        for (Map.Entry<KnowledgeSource, Schedule> entry : record.entrySet()) {
+        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
             executeSingleSourcePlan(entry, student);
         }
 
@@ -35,8 +33,26 @@ public class DevelopmentPLan {
         students.forEach(this::executePlan);
     }
 
-    public String getScheduleForToday() {
-        return null;
+    public String getScheduleForToday(Student student) {
+        StringBuilder builder = new StringBuilder(student.getName()).append("'s schedule for today:\n");
+        boolean hasRecords = false;
+        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
+            Schedule schedule = entry.getValue();
+            if(isSatisfyingCondition(LocalDate.now(), schedule)) {
+                builder.append(schedule)
+                        .append(" Begins: ")
+                        .append(schedule.getStartTime())
+                        .append(" ends: ")
+                        .append(schedule.getEndTime());
+                hasRecords = true;
+            }
+        }
+
+        if(!hasRecords) {
+            return builder.append("No records").toString();
+        }
+
+        return builder.toString();
     }
 
     public boolean isSatisfyingCondition(LocalDate testDay, Schedule schedule) {
