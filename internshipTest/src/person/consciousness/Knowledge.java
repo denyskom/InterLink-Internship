@@ -20,7 +20,4 @@ public class Knowledge {
         this.level += level;
     }
 
-    public void setLevel(double level) {
-        this.level = level;
-    }
 }

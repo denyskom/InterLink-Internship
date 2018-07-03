@@ -6,7 +6,7 @@ import institution.interlink.MeetUp;
 import institution.selfEducation.SelfEducationActivity;
 import institution.selfEducation.SelfStudy;
 import person.Student;
-import plan.DevelopmentPLan;
+import plan.DevelopmentPlan;
 import plan.PresetConditions;
 import plan.Schedule;
 import repository.HardcodedStudentsRepository;
@@ -41,7 +41,7 @@ public class Application {
         internship.getStudentsList().forEach(System.out::println);
 
 
-        DevelopmentPLan plan = new DevelopmentPLan("Excellent");
+        DevelopmentPlan plan = new DevelopmentPlan("Excellent");
 
         Schedule universitySchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
                 LocalDate.of(2020, Month.MAY, 20),
@@ -60,7 +60,7 @@ public class Application {
                 LocalDate.of(2018, Month.AUGUST, 25),
                 LocalTime.of(9,0),
                 LocalTime.of(18, 0),
-                Arrays.asList(PresetConditions.WEEKDAY_CONDITION.getValue()));
+                PresetConditions.WEEKDAY_CONDITION.getValue());
 
         Schedule studySchedule = new Schedule(LocalDate.of(2016, Month.JANUARY, 1),
                 LocalDate.of(2018, Month.DECEMBER, 31),
@@ -77,7 +77,10 @@ public class Application {
 
         System.out.println("\n");
         studentsList.forEach(System.out::println);
+        internship.recruitStudents(university);
 
+        System.out.println("\nList of 2 internship's students:");
+        internship.getStudentsList().forEach(System.out::println);
     }
 
     private static boolean isLastThursday(LocalDate testDay){

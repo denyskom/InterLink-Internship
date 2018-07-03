@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class DevelopmentPLan {
+public class DevelopmentPlan {
     private Map<KnowledgeSource, Schedule> records;
     private String name;
-    public DevelopmentPLan(String name) {
+    public DevelopmentPlan(String name) {
         this.name = name;
         records = new HashMap<>();
     }
@@ -77,7 +77,7 @@ public class DevelopmentPLan {
             return;
         }
 
-        LocalDate executionEnd = gerExecutionEnd(schedule);
+        LocalDate executionEnd = getExecutionEnd(schedule);
 
 
         LocalDate testDay = startDate;
@@ -90,7 +90,7 @@ public class DevelopmentPLan {
 
     }
 
-    private LocalDate gerExecutionEnd(Schedule schedule) {
+    private LocalDate getExecutionEnd(Schedule schedule) {
         LocalDateTime today =  LocalDateTime.now();
         LocalDate currentDate = today.toLocalDate();
         LocalDate executionEnd = currentDate;

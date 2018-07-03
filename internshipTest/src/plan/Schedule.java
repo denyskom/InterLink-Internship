@@ -13,9 +13,6 @@ public class Schedule {
     private LocalTime endTime;
     private List<Function<LocalDate, Boolean>> conditions;
 
-    public Schedule() {
-        this.conditions = new ArrayList<>();
-    }
 
     public Schedule(LocalDate startDate,
                     LocalDate endDate,
@@ -28,6 +25,20 @@ public class Schedule {
         this.startTime = startTime;
         this.endTime = endTime;
         this.conditions = conditions;
+    }
+
+    public Schedule(LocalDate startDate,
+                    LocalDate endDate,
+                    LocalTime startTime,
+                    LocalTime endTime,
+                    Function<LocalDate,
+                            Boolean> condition) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.conditions = new ArrayList<>();
+        this.conditions.add(condition);
     }
 
     public LocalDate getStartDate() {

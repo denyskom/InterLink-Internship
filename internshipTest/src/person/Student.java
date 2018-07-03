@@ -23,14 +23,6 @@ public class Student implements KnowledgeSource {
         this.theoryKnowledge = new Knowledge(theory);
     }
 
-    public void setPracticalKnowledge(Knowledge practicalKnowledge) {
-        this.practicalKnowledge = practicalKnowledge;
-    }
-
-    public void setTeoryKnowledge(Knowledge theoryKnowledge) {
-        this.theoryKnowledge = theoryKnowledge;
-    }
-
     public void setSkillCoefficient(double skillCoefficient) {
         this.skillCoefficient = skillCoefficient;
     }
@@ -65,7 +57,7 @@ public class Student implements KnowledgeSource {
     }
 
     private double getGivenKnowledge(double knowledge){
-        double knowledgePercentage = practicalKnowledge.getLevel() * 0.1;
+        double knowledgePercentage = knowledge * 0.1;
         if (maxGivenKnowledge > knowledgePercentage){
             return knowledgePercentage;
         }
