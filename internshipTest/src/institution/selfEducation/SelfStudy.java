@@ -34,6 +34,7 @@ public class SelfStudy implements KnowledgeSource {
     public double getGeneralKnowledge(Function<SelfEducationActivity, Double> mappingFunction) {
         return activities.stream()
                 .map(mappingFunction)
-                .reduce((a1, a2) -> a1 + a2).orElseGet(() -> (double) 0);
+                .reduce((a1, a2) -> a1 + a2)
+                .orElseGet(() -> (double) 0);
     }
 }

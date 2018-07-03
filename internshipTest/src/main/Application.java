@@ -90,10 +90,7 @@ public class Application {
         int monthLength = testDay.lengthOfMonth();
         int monthDay = testDay.getDayOfMonth();
 
-        if(monthLength - monthDay >= 7) {
-            return false;
-        }
-        return true;
+        return monthLength - monthDay < 7;
     }
 
 }
