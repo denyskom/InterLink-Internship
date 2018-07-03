@@ -14,8 +14,8 @@ public class Internship extends MassKnowledgeSource implements KnowledgeSource {
     public Internship(String name) {
         super(name);
         this.students = "There is no students";
-        super.practicalKnowledge = 1000;
-        super.theoryKnowledge = 250;
+        super.practicalKnowledge = 10;
+        super.theoryKnowledge = 3;
     }
 
     public String getStudents() {

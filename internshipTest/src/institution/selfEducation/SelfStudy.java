@@ -3,6 +3,7 @@ package institution.selfEducation;
 import institution.KnowledgeSource;
 import person.Student;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
@@ -15,8 +16,8 @@ public class SelfStudy implements KnowledgeSource {
         activities.add(activity);
     }
 
-    public SelfStudy(Set<SelfEducationActivity> activities) {
-        this.activities = activities;
+    public SelfStudy(SelfEducationActivity firstActivity, SelfEducationActivity secondActivity) {
+        activities.addAll(Arrays.asList(firstActivity, secondActivity));
     }
 
 

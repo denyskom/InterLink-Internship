@@ -12,8 +12,8 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
     public University(String name) {
         super(name);
         this.studentsList = new ArrayList<>();
-        super.practicalKnowledge = 250;
-        super.theoryKnowledge = 1000;
+        super.practicalKnowledge = 5;
+        super.theoryKnowledge = 10;
     }
 
     public University(String name, double practicalKnowledge, double theoryKnowledge ) {
