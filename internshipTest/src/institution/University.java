@@ -7,7 +7,6 @@ import java.util.List;
 
 public class University extends MassKnowledgeSource implements KnowledgeSource {
     private String name;
-//    private List<Student> studentsList;
 
     public University(String name) {
         super(name);

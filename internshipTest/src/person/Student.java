@@ -7,6 +7,7 @@ public class Student implements KnowledgeSource {
     private String name;
     private Knowledge practicalKnowledge;
     private Knowledge theoryKnowledge;
+    private double maxGivenKnowledge = 3;
     private double skillCoefficient = 0.5;
     private boolean hasNotebook = true;
 
@@ -38,7 +39,9 @@ public class Student implements KnowledgeSource {
         this.hasNotebook = hasNotebook;
     }
 
-
+    public void setMaxGivenKnowledge(double maxGivenKnowledge) {
+        this.maxGivenKnowledge = maxGivenKnowledge;
+    }
 
     public String getName() {
         return name;
@@ -61,6 +64,14 @@ public class Student implements KnowledgeSource {
         return hasNotebook;
     }
 
+    private double getGivenKnowledge(double knowledge){
+        double knowledgePercentage = practicalKnowledge.getLevel() * 0.1;
+        if (maxGivenKnowledge > knowledgePercentage){
+            return knowledgePercentage;
+        }
+        return  maxGivenKnowledge;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -70,9 +81,16 @@ public class Student implements KnowledgeSource {
                 '}';
     }
 
+
     @Override
     public void tutor(Student student) {
-        student.increasePracticalKnowledge(3);
-        student.increaseTheoryKnowledge(1);
+        if (student.getName().equals(this.name)){
+            return;
+        }
+
+        if((practicalKnowledge.getLevel() > 0 && theoryKnowledge.getLevel() > 0)) {
+            student.increasePracticalKnowledge(getGivenKnowledge(practicalKnowledge.getLevel()));
+            student.increaseTheoryKnowledge(getGivenKnowledge(theoryKnowledge.getLevel()));
+        }
     }
 }

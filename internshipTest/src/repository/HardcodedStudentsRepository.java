@@ -17,6 +17,7 @@ public class HardcodedStudentsRepository implements StudentsRepository {
         Student student3 = new Student("Maria Perechrest", 10, 50);
 
         student1.setSkillCoefficient(0.8);
+        student2.setHasNotebook(true);
 
 
 

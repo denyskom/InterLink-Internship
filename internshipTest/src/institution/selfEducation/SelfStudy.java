@@ -17,6 +17,7 @@ public class SelfStudy implements KnowledgeSource {
     }
 
     public SelfStudy(SelfEducationActivity firstActivity, SelfEducationActivity secondActivity) {
+        this.activities = new HashSet<>();
         activities.addAll(Arrays.asList(firstActivity, secondActivity));
     }
 

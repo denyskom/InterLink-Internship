@@ -9,12 +9,13 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class DevelopmentPLan {
     private Map<KnowledgeSource, Schedule> records;
-
-    public DevelopmentPLan() {
+    private String name;
+    public DevelopmentPLan(String name) {
+        this.name = name;
         records = new HashMap<>();
     }
 
@@ -56,9 +57,9 @@ public class DevelopmentPLan {
     }
 
     public boolean isSatisfyingCondition(LocalDate testDay, Schedule schedule) {
-        List<BiFunction<LocalDate, Schedule, Boolean>> conditions = schedule.getConditions();
-        for (BiFunction<LocalDate, Schedule, Boolean> condition : conditions){
-            if(!condition.apply(testDay, schedule)) {
+        List<Function<LocalDate, Boolean>> conditions = schedule.getConditions();
+        for (Function<LocalDate, Boolean> condition : conditions){
+            if(!condition.apply(testDay)) {
                 return false;
             }
         }
@@ -70,15 +71,30 @@ public class DevelopmentPLan {
                                          Student student) {
         Schedule schedule = entry.getValue();
         LocalDateTime today = LocalDateTime.now();
-        LocalDate currentDate = today.toLocalDate();
-        LocalTime currentTime = today.toLocalTime();
         LocalDate startDate = schedule.getStartDate();
 
-        if(currentDate.isBefore(startDate)) {
+        if(today.toLocalDate().isBefore(startDate)) {
             return;
         }
 
-        LocalDate executionEnd = LocalDate.now();
+        LocalDate executionEnd = gerExecutionEnd(schedule);
+
+
+        LocalDate testDay = startDate;
+        do {
+            if(isSatisfyingCondition(testDay, schedule)) {
+                entry.getKey().tutor(student);
+            }
+            testDay = testDay.plusDays(1);
+        } while (testDay.isBefore(executionEnd));
+
+    }
+
+    private LocalDate gerExecutionEnd(Schedule schedule) {
+        LocalDateTime today =  LocalDateTime.now();
+        LocalDate currentDate = today.toLocalDate();
+        LocalDate executionEnd = currentDate;
+        LocalTime currentTime = today.toLocalTime();
         LocalDate endDate = schedule.getEndDate();
 
         if(currentDate.isAfter(endDate)) {
@@ -92,14 +108,6 @@ public class DevelopmentPLan {
             executionEnd = currentDate.minusDays(1);
         }
 
-
-        LocalDate testDay = startDate;
-        do {
-            if(isSatisfyingCondition(testDay, schedule)) {
-                entry.getKey().tutor(student);
-            }
-            testDay = testDay.plusDays(1);
-        } while (testDay.isBefore(executionEnd));
-
+        return executionEnd;
     }
 }

@@ -4,14 +4,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class Schedule {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalTime startTime;
     private LocalTime endTime;
-    private List<BiFunction<LocalDate, Schedule, Boolean>> conditions;
+    private List<Function<LocalDate, Boolean>> conditions;
 
     public Schedule() {
         this.conditions = new ArrayList<>();
@@ -21,8 +21,7 @@ public class Schedule {
                     LocalDate endDate,
                     LocalTime startTime,
                     LocalTime endTime,
-                    List<BiFunction<LocalDate,
-                            Schedule,
+                    List<Function<LocalDate,
                             Boolean>> conditions) {
         this.startDate = startDate;
         this.endDate = endDate;
@@ -63,11 +62,11 @@ public class Schedule {
         this.endTime = endTime;
     }
 
-    public List<BiFunction<LocalDate, Schedule, Boolean>> getConditions() {
+    public List<Function<LocalDate, Boolean>> getConditions() {
         return conditions;
     }
 
-    public void addCondition(BiFunction<LocalDate, Schedule, Boolean> condition) {
+    public void addCondition(Function<LocalDate, Boolean> condition) {
         conditions.add(condition);
     }
 }

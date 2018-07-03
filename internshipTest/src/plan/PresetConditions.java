@@ -3,29 +3,24 @@ package plan;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public enum PresetConditions {
     WEEKDAY_CONDITION(PresetConditions::weekDayCondition),
     SUMMER_CONDITION(PresetConditions::summerCondition),
     WEEKEND_CONDITION(PresetConditions::weekendCondition);
 
-    private final BiFunction<LocalDate, Schedule, Boolean>  condition;
+    private final Function<LocalDate, Boolean> condition;
 
-    PresetConditions(BiFunction<LocalDate, Schedule, Boolean> condition) {
+    PresetConditions(Function<LocalDate, Boolean> condition) {
         this.condition = condition;
     }
 
-    public BiFunction<LocalDate, Schedule, Boolean> getValue() {
+    public Function<LocalDate, Boolean> getValue() {
        return condition;
     }
 
-    private static boolean weekDayCondition(LocalDate testDay, Schedule schedule) {
-
-
-        if(testDay.isBefore(schedule.getStartDate())){
-            return false;
-        }
+    private static boolean weekDayCondition(LocalDate testDay) {
 
         DayOfWeek dayOfWeek = testDay.getDayOfWeek();
         if(dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
@@ -35,7 +30,7 @@ public enum PresetConditions {
         return true;
     }
 
-    private static boolean weekendCondition(LocalDate testDay,Schedule schedule){
+    private static boolean weekendCondition(LocalDate testDay){
         DayOfWeek dayOfWeek = testDay.getDayOfWeek();
 
         if(dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
@@ -44,7 +39,7 @@ public enum PresetConditions {
         return false;
     }
 
-    private static boolean summerCondition(LocalDate testDay, Schedule schedule) {
+    private static boolean summerCondition(LocalDate testDay) {
         Month month = testDay.getMonth();
 
         if(month.equals(Month.JUNE)

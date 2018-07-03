@@ -1,16 +1,18 @@
 package institution.interlink;
 
 import institution.KnowledgeSource;
-import institution.MassKnowledgeSource;
 import person.Student;
 
-public class MeetUp extends MassKnowledgeSource implements KnowledgeSource {
+public class MeetUp  implements KnowledgeSource {
     private boolean isInteractive = false;
     private boolean isPractical = false;
     private double interactiveCoefficient = 2;
+    private double practicalKnowledge ;
+    private double theoryKnowledge;
+    private String name;
 
     public MeetUp(String name) {
-        super(name);
+        this.name = name;
         practicalKnowledge = 20;
         theoryKnowledge = 10;
     }
@@ -29,6 +31,14 @@ public class MeetUp extends MassKnowledgeSource implements KnowledgeSource {
 
     public void setInteractiveCoefficient(double interactiveCoefficient) {
         this.interactiveCoefficient = interactiveCoefficient;
+    }
+
+    public void setPracticalKnowledge(double practicalKnowledge) {
+        this.practicalKnowledge = practicalKnowledge;
+    }
+
+    public void setTheoryKnowledge(double theoryKnowledge) {
+        this.theoryKnowledge = theoryKnowledge;
     }
 
     @Override

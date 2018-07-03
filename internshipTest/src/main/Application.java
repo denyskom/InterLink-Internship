@@ -2,6 +2,7 @@ package main;
 
 import institution.University;
 import institution.interlink.Internship;
+import institution.interlink.MeetUp;
 import institution.selfEducation.SelfEducationActivity;
 import institution.selfEducation.SelfStudy;
 import person.Student;
@@ -11,10 +12,11 @@ import plan.Schedule;
 import repository.HardcodedStudentsRepository;
 import repository.StudentsRepository;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,28 +32,65 @@ public class Application {
         Internship internship = new Internship("Interlink");
         internship.recruitStudents(university);
 
-        SelfStudy study = new SelfStudy(SelfEducationActivity.READING,
+        SelfStudy selfStudy = new SelfStudy(SelfEducationActivity.READING,
                 SelfEducationActivity.CODE_PRACTICE);
+        MeetUp meetUp = new MeetUp("InterLinkMeetUp");
+        meetUp.setPractical(true);
+
+        System.out.println("List of internship's students:");
+        internship.getStudentsList().forEach(System.out::println);
 
 
-        DevelopmentPLan plan = new DevelopmentPLan();
-        Schedule universitySchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 1),
-                LocalDate.of(2016, Month.SEPTEMBER, 2),
+        DevelopmentPLan plan = new DevelopmentPLan("Excellent");
+
+        Schedule universitySchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
+                LocalDate.of(2020, Month.MAY, 20),
                 LocalTime.of(9,0),
                 LocalTime.of(15, 0),
-                Arrays.asList(PresetConditions.SUMMER_CONDITION.getValue(),
-                        PresetConditions.WEEKDAY_CONDITION.getValue()));
-        plan.addRecord(study, universitySchedule);
+                Arrays.asList(PresetConditions.WEEKDAY_CONDITION.getValue(),
+                        PresetConditions.SUMMER_CONDITION.getValue()));
 
+        Schedule meetUpSchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
+                LocalDate.of(2020, Month.MAY, 20),
+                LocalTime.of(9,0),
+                LocalTime.of(15, 0),
+                Arrays.asList(PresetConditions.WEEKDAY_CONDITION.getValue(), Application::isLastThursday));
+
+        Schedule internshipSchedule = new Schedule(LocalDate.of(2018, Month.JUNE, 1),
+                LocalDate.of(2018, Month.AUGUST, 25),
+                LocalTime.of(9,0),
+                LocalTime.of(18, 0),
+                Arrays.asList(PresetConditions.WEEKDAY_CONDITION.getValue()));
+
+        Schedule studySchedule = new Schedule(LocalDate.of(2016, Month.JANUARY, 1),
+                LocalDate.of(2018, Month.DECEMBER, 31),
+                LocalTime.of(16,0),
+                LocalTime.of(18, 0),
+                new ArrayList<>());
+
+
+        plan.addRecord(university, universitySchedule);
+        plan.addRecord(meetUp, meetUpSchedule);
+        plan.addRecord(internship, internshipSchedule);
+        plan.addRecord(selfStudy, studySchedule);
         plan.executePlan(studentsList);
 
         System.out.println("\n");
         studentsList.forEach(System.out::println);
 
+    }
 
+    private static boolean isLastThursday(LocalDate testDay){
+        if(!testDay.getDayOfWeek().equals(DayOfWeek.THURSDAY)) {
+            return false;
+        }
+        int monthLength = testDay.lengthOfMonth();
+        int monthDay = testDay.getDayOfMonth();
 
-//        System.out.println("List of internship's students:");
-//        System.out.println(internship.getStudents());
+        if(monthLength - monthDay >= 7) {
+            return false;
+        }
+        return true;
     }
 
 }
