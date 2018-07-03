@@ -36,11 +36,4 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
         return studentsList;
     }
 
-    @Override
-    public void tutor(Student student) {
-        if(isPresent(student)) {
-            student.increasePracticalKnowledge(practicalKnowledge);
-            student.increaseTheoryKnowledge(theoryKnowledge);
-        }
-    }
 }

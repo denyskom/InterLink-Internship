@@ -9,7 +9,6 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class DevelopmentPlan {
     private Map<KnowledgeSource, Schedule> records;
@@ -39,7 +38,7 @@ public class DevelopmentPlan {
         boolean hasRecords = false;
         for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
             Schedule schedule = entry.getValue();
-            if(isSatisfyingCondition(LocalDate.now(), schedule)) {
+            if(schedule.isSatisfyingCondition(LocalDate.now())) {
                 builder.append(schedule)
                         .append(" Begins: ")
                         .append(schedule.getStartTime())
@@ -54,17 +53,6 @@ public class DevelopmentPlan {
         }
 
         return builder.toString();
-    }
-
-    public boolean isSatisfyingCondition(LocalDate testDay, Schedule schedule) {
-        List<Function<LocalDate, Boolean>> conditions = schedule.getConditions();
-        for (Function<LocalDate, Boolean> condition : conditions){
-            if(!condition.apply(testDay)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     private void executeSingleSourcePlan(Map.Entry<KnowledgeSource, Schedule> entry,
@@ -82,7 +70,7 @@ public class DevelopmentPlan {
 
         LocalDate testDay = startDate;
         do {
-            if(isSatisfyingCondition(testDay, schedule)) {
+            if(schedule.isSatisfyingCondition(testDay)) {
                 entry.getKey().tutor(student);
             }
             testDay = testDay.plusDays(1);

@@ -5,7 +5,7 @@ import person.Student;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MassKnowledgeSource {
+public abstract class MassKnowledgeSource implements KnowledgeSource {
     protected String name;
     protected List<Student> studentsList;
     protected double practicalKnowledge = 0;
@@ -31,5 +31,13 @@ public abstract class MassKnowledgeSource {
     public boolean isPresent(Student student) {
         return studentsList.stream()
                 .anyMatch(universityStudent -> universityStudent.getName().equals(student.getName()));
+    }
+
+    @Override
+    public void tutor(Student student) {
+        if(isPresent(student)) {
+            student.increaseTheoryKnowledge(theoryKnowledge);
+            student.increasePracticalKnowledge(practicalKnowledge);
+        }
     }
 }

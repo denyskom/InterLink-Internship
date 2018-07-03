@@ -80,4 +80,10 @@ public class Schedule {
     public void addCondition(Function<LocalDate, Boolean> condition) {
         conditions.add(condition);
     }
+
+    public boolean isSatisfyingCondition(LocalDate testDay) {
+        return getConditions().stream()
+                .allMatch(c -> c.apply(testDay));
+
+    }
 }

@@ -50,11 +50,4 @@ public class Internship extends MassKnowledgeSource implements KnowledgeSource {
                 .average().orElse(0);
     }
 
-    @Override
-    public void tutor(Student student) {
-        if(isPresent(student)) {
-            student.increaseTheoryKnowledge(theoryKnowledge);
-            student.increasePracticalKnowledge(practicalKnowledge);
-        }
-    }
 }

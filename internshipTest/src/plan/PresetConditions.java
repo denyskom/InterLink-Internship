@@ -6,7 +6,7 @@ import java.time.Month;
 import java.util.function.Function;
 
 public enum PresetConditions {
-    WEEKDAY_CONDITION(PresetConditions::weekDayCondition),
+    WEEKDAY_CONDITION(localDate -> !weekDayCondition(localDate)),
     SUMMER_CONDITION(PresetConditions::summerCondition),
     WEEKEND_CONDITION(PresetConditions::weekendCondition);
 
@@ -50,4 +50,7 @@ public enum PresetConditions {
         return true;
     }
 
+    private static class Constants {
+        private static final Function<LocalDate, Boolean> weekendCondition = PresetConditions::weekendCondition;
+    }
 }
