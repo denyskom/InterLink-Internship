@@ -4,22 +4,21 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Schedule {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalTime startTime;
     private LocalTime endTime;
-    private List<Function<LocalDate, Boolean>> conditions;
+    private List<Predicate<LocalDate>> conditions;
 
 
     public Schedule(LocalDate startDate,
                     LocalDate endDate,
                     LocalTime startTime,
                     LocalTime endTime,
-                    List<Function<LocalDate,
-                            Boolean>> conditions) {
+                    List<Predicate<LocalDate>> conditions) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -31,8 +30,7 @@ public class Schedule {
                     LocalDate endDate,
                     LocalTime startTime,
                     LocalTime endTime,
-                    Function<LocalDate,
-                            Boolean> condition) {
+                    Predicate<LocalDate> condition) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.startTime = startTime;
@@ -73,17 +71,17 @@ public class Schedule {
         this.endTime = endTime;
     }
 
-    public List<Function<LocalDate, Boolean>> getConditions() {
+    public List<Predicate<LocalDate>> getConditions() {
         return conditions;
     }
 
-    public void addCondition(Function<LocalDate, Boolean> condition) {
+    public void addCondition(Predicate<LocalDate> condition) {
         conditions.add(condition);
     }
 
     public boolean isSatisfyingCondition(LocalDate testDay) {
         return getConditions().stream()
-                .allMatch(c -> c.apply(testDay));
+                .allMatch(c -> c.test(testDay));
 
     }
 }

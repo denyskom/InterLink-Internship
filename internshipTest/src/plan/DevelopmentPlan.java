@@ -33,28 +33,6 @@ public class DevelopmentPlan {
         students.forEach(this::executePlan);
     }
 
-    public String getScheduleForToday(Student student) {
-        StringBuilder builder = new StringBuilder(student.getName()).append("'s schedule for today:\n");
-        boolean hasRecords = false;
-        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
-            Schedule schedule = entry.getValue();
-            if(schedule.isSatisfyingCondition(LocalDate.now())) {
-                builder.append(schedule)
-                        .append(" Begins: ")
-                        .append(schedule.getStartTime())
-                        .append(" ends: ")
-                        .append(schedule.getEndTime());
-                hasRecords = true;
-            }
-        }
-
-        if(!hasRecords) {
-            return builder.append("No records").toString();
-        }
-
-        return builder.toString();
-    }
-
     private void executeSingleSourcePlan(Map.Entry<KnowledgeSource, Schedule> entry,
                                          Student student) {
         Schedule schedule = entry.getValue();
@@ -97,5 +75,27 @@ public class DevelopmentPlan {
         }
 
         return executionEnd;
+    }
+
+    public String getScheduleForToday(Student student) {
+        StringBuilder builder = new StringBuilder(student.getName()).append("'s schedule for today:\n");
+        boolean hasRecords = false;
+        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
+            Schedule schedule = entry.getValue();
+            if(schedule.isSatisfyingCondition(LocalDate.now())) {
+                builder.append(schedule)
+                        .append(" Begins: ")
+                        .append(schedule.getStartTime())
+                        .append(" ends: ")
+                        .append(schedule.getEndTime());
+                hasRecords = true;
+            }
+        }
+
+        if(!hasRecords) {
+            return builder.append("No records").toString();
+        }
+
+        return builder.toString();
     }
 }

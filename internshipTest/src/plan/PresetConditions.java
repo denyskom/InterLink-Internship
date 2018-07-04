@@ -3,20 +3,20 @@ package plan;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.function.Function;
+import java.util.function.Predicate;
 
 public enum PresetConditions {
     WEEKDAY_CONDITION(localDate -> !weekDayCondition(localDate)),
     SUMMER_CONDITION(PresetConditions::summerCondition),
     WEEKEND_CONDITION(PresetConditions::weekendCondition);
 
-    private final Function<LocalDate, Boolean> condition;
+    private final Predicate<LocalDate> condition;
 
-    PresetConditions(Function<LocalDate, Boolean> condition) {
+    PresetConditions(Predicate<LocalDate> condition) {
         this.condition = condition;
     }
 
-    public Function<LocalDate, Boolean> getValue() {
+    public Predicate<LocalDate> getValue() {
        return condition;
     }
 
@@ -48,9 +48,5 @@ public enum PresetConditions {
             return false;
         }
         return true;
-    }
-
-    private static class Constants {
-        private static final Function<LocalDate, Boolean> weekendCondition = PresetConditions::weekendCondition;
     }
 }
