@@ -34,8 +34,8 @@ public class DevelopmentPlan {
 
     public void executePlan(List<Student> students) {
         LocalTime currentTime = LocalTime.now();
-        LocalDate executionEnd = getSpecificDate(this::specifyEndDate);
-        LocalDate testDay = getSpecificDate(this::specifyStartDate);
+        LocalDate executionEnd = specifyEndDate();
+        LocalDate testDay = specifyStartDate();
 
         Map<KnowledgeSource, Schedule> recordsCopy = new HashMap<>(records);
         do {
@@ -69,41 +69,31 @@ public class DevelopmentPlan {
         } while (testDay.isBefore(executionEnd));
     }
 
-    private LocalDate getSpecificDate(BiFunction<Map.Entry<KnowledgeSource, Schedule>,
-                LocalDate,
-                LocalDate> dateCondition) {
-        LocalDate specificDate = LocalDate.now();
 
+    private LocalDate specifyStartDate() {
+        LocalDate startDay = LocalDate.now();
         for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
-            specificDate = dateCondition.apply(entry, specificDate);
+            LocalDate sourceStartDate = entry.getValue().getStartDate();
+            if(sourceStartDate.isBefore(startDay)){
+                startDay = sourceStartDate;
+            }
         }
-
-        return specificDate;
-    }
-
-    private LocalDate specifyStartDate(Map.Entry<KnowledgeSource, Schedule> entry,
-                                  LocalDate startDay) {
-        LocalDate sourceStartDate = entry.getValue().getStartDate();
-
-        if(sourceStartDate.isBefore(startDay)){
-            startDay = sourceStartDate;
-        }
-
         return startDay;
     }
 
-    private LocalDate specifyEndDate(Map.Entry<KnowledgeSource, Schedule> entry,
-                                     LocalDate executionEnd) {
-        LocalDate sourceEndDate = entry.getValue().getEndDate();
+    private LocalDate specifyEndDate() {
         LocalDate today = LocalDate.now();
-        if(sourceEndDate.isAfter(today)){
-            return today;
-        }
+        LocalDate executionEnd = LocalDate.now();
+        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
+            LocalDate sourceEndDate = entry.getValue().getEndDate();
+            if(sourceEndDate.isAfter(today)){
+                return today;
+            }
 
-        if(sourceEndDate.isBefore(executionEnd)){
-            executionEnd = sourceEndDate;
+            if(sourceEndDate.isBefore(executionEnd)){
+                executionEnd = sourceEndDate;
+            }
         }
-
         return executionEnd;
     }
 }
