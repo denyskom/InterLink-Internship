@@ -47,20 +47,20 @@ public class Application {
                 LocalDate.of(2020, Month.MAY, 20),
                 LocalTime.of(9,0),
                 LocalTime.of(15, 0),
-                Arrays.asList(PresetConditions.WEEKDAY_CONDITION.getValue(),
+                Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(),
                         PresetConditions.SUMMER_CONDITION.getValue()));
 
         Schedule meetUpSchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
-                LocalDate.of(2020, Month.MAY, 20),
+                LocalDate.of(2017, Month.MAY, 20),
                 LocalTime.of(9,0),
                 LocalTime.of(15, 0),
-                Arrays.asList(PresetConditions.WEEKDAY_CONDITION.getValue(), Application::isLastThursday));
+                Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(), Application::isLastThursday));
 
         Schedule internshipSchedule = new Schedule(LocalDate.of(2018, Month.JUNE, 1),
                 LocalDate.of(2018, Month.AUGUST, 25),
                 LocalTime.of(9,0),
                 LocalTime.of(18, 0),
-                PresetConditions.WEEKDAY_CONDITION.getValue());
+                PresetConditions.WORKDAY_CONDITION.getValue());
 
         Schedule studySchedule = new Schedule(LocalDate.of(2016, Month.JANUARY, 1),
                 LocalDate.of(2018, Month.DECEMBER, 31),

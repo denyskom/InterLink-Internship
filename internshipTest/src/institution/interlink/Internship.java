@@ -5,6 +5,7 @@ import institution.MassKnowledgeSource;
 import institution.University;
 import person.Student;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Internship extends MassKnowledgeSource implements KnowledgeSource {
@@ -24,6 +25,7 @@ public class Internship extends MassKnowledgeSource implements KnowledgeSource {
 
 
     public void recruitStudents(University university) {
+        this.studentsList = new ArrayList<>();
         List<Student> studentsList = university.getStudentsList();
 
         if (studentsList.isEmpty()) {

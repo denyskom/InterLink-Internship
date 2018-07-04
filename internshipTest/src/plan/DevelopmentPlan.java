@@ -2,17 +2,17 @@ package plan;
 
 import institution.KnowledgeSource;
 import person.Student;
+import person.consciousness.Knowledge;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DevelopmentPlan {
     private Map<KnowledgeSource, Schedule> records;
     private String name;
+
     public DevelopmentPlan(String name) {
         this.name = name;
         records = new HashMap<>();
@@ -23,59 +23,58 @@ public class DevelopmentPlan {
     }
 
     public void executePlan(Student student) {
-        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
-            executeSingleSourcePlan(entry, student);
-        }
-
+        executePlan(Collections.singletonList(student));
     }
 
     public void executePlan(List<Student> students) {
-        students.forEach(this::executePlan);
-    }
+        LocalDate startDay = LocalDate.now();
+        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
+            LocalDate sourceStartDate = entry.getValue().getStartDate();
 
-    private void executeSingleSourcePlan(Map.Entry<KnowledgeSource, Schedule> entry,
-                                         Student student) {
-        Schedule schedule = entry.getValue();
-        LocalDateTime today = LocalDateTime.now();
-        LocalDate startDate = schedule.getStartDate();
-
-        if(today.toLocalDate().isBefore(startDate)) {
-            return;
-        }
-
-        LocalDate executionEnd = getExecutionEnd(schedule);
-
-
-        LocalDate testDay = startDate;
-        do {
-            if(schedule.isSatisfyingCondition(testDay)) {
-                entry.getKey().tutor(student);
+            if(sourceStartDate.isBefore(startDay)){
+                startDay = sourceStartDate;
             }
+
+        }
+        LocalDateTime today = LocalDateTime.now();
+        LocalDate executionEnd = today.toLocalDate();
+
+
+        LocalDate testDay = startDay;
+        Map<KnowledgeSource, Schedule> recordsCopy = new HashMap<>(records);
+        do {
+            Map<KnowledgeSource, Schedule> dayCopy = new HashMap<>(recordsCopy);
+
+            for (Map.Entry<KnowledgeSource, Schedule> entry : dayCopy.entrySet()){
+                Schedule schedule = entry.getValue();
+
+                if (testDay.isBefore(schedule.getStartDate()) ||
+                        testDay.isAfter(schedule.getEndDate())) {
+                    continue;
+                }
+
+
+                if (testDay.equals(executionEnd)) {
+                    if(schedule.getEndTime().isAfter(today.toLocalTime())) {
+                        continue;
+                    }
+                }
+
+                KnowledgeSource source = entry.getKey();
+                if (schedule.isSatisfyingCondition(testDay)){
+                    students.forEach(source::tutor);
+                }
+
+                if(testDay.equals(schedule.getEndDate())){
+                    recordsCopy.remove(source);
+
+                }
+            }
+
             testDay = testDay.plusDays(1);
         } while (testDay.isBefore(executionEnd));
-
     }
 
-    private LocalDate getExecutionEnd(Schedule schedule) {
-        LocalDateTime today =  LocalDateTime.now();
-        LocalDate currentDate = today.toLocalDate();
-        LocalDate executionEnd = currentDate;
-        LocalTime currentTime = today.toLocalTime();
-        LocalDate endDate = schedule.getEndDate();
-
-        if(currentDate.isAfter(endDate)) {
-            executionEnd = endDate;
-        }
-
-
-        LocalTime endTime = schedule.getEndTime();
-        if(currentTime.isBefore(endTime)
-                && (currentDate.isBefore(endDate) || currentDate.equals(endDate))) {
-            executionEnd = currentDate.minusDays(1);
-        }
-
-        return executionEnd;
-    }
 
     public String getScheduleForToday(Student student) {
         StringBuilder builder = new StringBuilder(student.getName()).append("'s schedule for today:\n");

@@ -82,6 +82,5 @@ public class Schedule {
     public boolean isSatisfyingCondition(LocalDate testDay) {
         return getConditions().stream()
                 .allMatch(c -> c.test(testDay));
-
     }
 }

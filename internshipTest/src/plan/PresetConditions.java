@@ -6,9 +6,9 @@ import java.time.Month;
 import java.util.function.Predicate;
 
 public enum PresetConditions {
-    WEEKDAY_CONDITION(localDate -> !weekDayCondition(localDate)),
+    WORKDAY_CONDITION(PresetConditions::workDayCondition),
     SUMMER_CONDITION(PresetConditions::summerCondition),
-    WEEKEND_CONDITION(PresetConditions::weekendCondition);
+    WEEKEND_CONDITION(localDate -> !workDayCondition(localDate));
 
     private final Predicate<LocalDate> condition;
 
@@ -20,7 +20,7 @@ public enum PresetConditions {
        return condition;
     }
 
-    private static boolean weekDayCondition(LocalDate testDay) {
+    private static boolean workDayCondition(LocalDate testDay) {
 
         DayOfWeek dayOfWeek = testDay.getDayOfWeek();
         if(dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
@@ -28,15 +28,6 @@ public enum PresetConditions {
         }
 
         return true;
-    }
-
-    private static boolean weekendCondition(LocalDate testDay){
-        DayOfWeek dayOfWeek = testDay.getDayOfWeek();
-
-        if(dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
-            return true;
-        }
-        return false;
     }
 
     private static boolean summerCondition(LocalDate testDay) {
