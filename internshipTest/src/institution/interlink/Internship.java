@@ -28,10 +28,8 @@ public class Internship extends MassKnowledgeSource implements KnowledgeSource {
         double average = countAverageKnowledge(studentsList);
         studentsList.stream()
                 .filter(student -> student.getFullExperience().getLevel() > average)
-                .forEach(student -> {
-                    this.students.add(student);
-
-                });
+                .forEach(student ->
+                    this.students.add(student));
     }
 
     private double countAverageKnowledge(List<Student> studentsList) {

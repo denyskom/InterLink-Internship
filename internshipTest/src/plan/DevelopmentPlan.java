@@ -6,7 +6,6 @@ import person.Student;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
-import java.util.function.BiFunction;
 
 
 public class DevelopmentPlan {
@@ -66,7 +65,7 @@ public class DevelopmentPlan {
             }
 
             testDay = testDay.plusDays(1);
-        } while (testDay.isBefore(executionEnd));
+        } while (!testDay.isAfter(executionEnd));
     }
 
 
@@ -92,6 +91,7 @@ public class DevelopmentPlan {
 
             if (sourceEndDate.isBefore(executionEnd)) {
                 executionEnd = sourceEndDate;
+                System.out.println(executionEnd);
             }
         }
         return executionEnd;

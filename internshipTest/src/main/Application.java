@@ -50,11 +50,11 @@ public class Application {
                 Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(),
                         PresetConditions.SUMMER_CONDITION.getValue()));
 
-        Schedule meetUpSchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
-                LocalDate.of(2017, Month.MAY, 20),
+        Schedule meetUpSchedule = new Schedule(LocalDate.of(2018, Month.MAY, 24),
+                LocalDate.of(2018, Month.MAY, 24),
                 LocalTime.of(9, 0),
                 LocalTime.of(15, 0),
-                Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(), Application::isLastThursday));
+                Arrays.asList(Application::isLastThursday));
 
         Schedule internshipSchedule = new Schedule(LocalDate.of(2018, Month.JUNE, 1),
                 LocalDate.of(2018, Month.AUGUST, 25),
@@ -83,14 +83,15 @@ public class Application {
         internship.getStudents().forEach(System.out::println);
     }
 
-    private static boolean isLastThursday(LocalDate testDay) {
+    public static boolean isLastThursday(LocalDate testDay) {
         if (!testDay.getDayOfWeek().equals(DayOfWeek.THURSDAY)) {
             return false;
         }
         int monthLength = testDay.lengthOfMonth();
         int monthDay = testDay.getDayOfMonth();
 
-        return monthLength - monthDay < 7;
+
+        return monthLength - monthDay < 8;
     }
 
 }
