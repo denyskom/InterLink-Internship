@@ -17,13 +17,13 @@ public enum PresetConditions {
     }
 
     public Predicate<LocalDate> getValue() {
-       return condition;
+        return condition;
     }
 
     private static boolean workDayCondition(LocalDate testDay) {
 
         DayOfWeek dayOfWeek = testDay.getDayOfWeek();
-        if(dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
+        if (dayOfWeek.equals(DayOfWeek.SATURDAY) || dayOfWeek.equals(DayOfWeek.SUNDAY)) {
             return false;
         }
 
@@ -33,7 +33,7 @@ public enum PresetConditions {
     private static boolean summerCondition(LocalDate testDay) {
         Month month = testDay.getMonth();
 
-        if(month.equals(Month.JUNE)
+        if (month.equals(Month.JUNE)
                 || month.equals(Month.JULY)
                 || month.equals(Month.AUGUST)) {
             return false;

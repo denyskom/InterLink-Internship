@@ -56,12 +56,12 @@ public class Student implements KnowledgeSource {
         return hasNotebook;
     }
 
-    private double getGivenKnowledge(double knowledge){
+    private double getGivenKnowledge(double knowledge) {
         double knowledgePercentage = knowledge * 0.1;
-        if (maxGivenKnowledge > knowledgePercentage){
+        if (maxGivenKnowledge > knowledgePercentage) {
             return knowledgePercentage;
         }
-        return  maxGivenKnowledge;
+        return maxGivenKnowledge;
     }
 
     @Override
@@ -76,11 +76,11 @@ public class Student implements KnowledgeSource {
 
     @Override
     public void tutor(Student student) {
-        if (student.getName().equals(this.name)){
+        if (student.getName().equals(this.name)) {
             return;
         }
 
-        if((practicalKnowledge.getLevel() > 0 && theoryKnowledge.getLevel() > 0)) {
+        if ((practicalKnowledge.getLevel() > 0 && theoryKnowledge.getLevel() > 0)) {
             student.increasePracticalKnowledge(getGivenKnowledge(practicalKnowledge.getLevel()));
             student.increaseTheoryKnowledge(getGivenKnowledge(theoryKnowledge.getLevel()));
         }

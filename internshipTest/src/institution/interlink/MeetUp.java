@@ -3,11 +3,11 @@ package institution.interlink;
 import institution.KnowledgeSource;
 import person.Student;
 
-public class MeetUp  implements KnowledgeSource {
+public class MeetUp implements KnowledgeSource {
     private boolean isInteractive = false;
     private boolean isPractical = false;
     private double interactiveCoefficient = 2;
-    private double practicalKnowledge ;
+    private double practicalKnowledge;
     private double theoryKnowledge;
     private String name;
 
@@ -43,11 +43,11 @@ public class MeetUp  implements KnowledgeSource {
 
     @Override
     public void tutor(Student student) {
-        if(isPractical && student.hasNotebook()) {
+        if (isPractical && student.hasNotebook()) {
             student.increasePracticalKnowledge(practicalKnowledge);
         }
 
-        if(isInteractive) {
+        if (isInteractive) {
             student.increaseTheoryKnowledge(theoryKnowledge * interactiveCoefficient);
             return;
         }

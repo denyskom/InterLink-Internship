@@ -15,13 +15,12 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
         super.theoryKnowledge = 10;
     }
 
-    public University(String name, double practicalKnowledge, double theoryKnowledge ) {
+    public University(String name, double practicalKnowledge, double theoryKnowledge) {
         super(name);
         this.students = new ArrayList<>();
         super.practicalKnowledge = practicalKnowledge;
         super.theoryKnowledge = theoryKnowledge;
     }
-
 
 
     public void addStudent(Student student) {

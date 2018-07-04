@@ -40,7 +40,7 @@ public class DevelopmentPlan {
         Map<KnowledgeSource, Schedule> recordsCopy = new HashMap<>(records);
         do {
             Iterator<Map.Entry<KnowledgeSource, Schedule>> iterator = recordsCopy.entrySet().iterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Map.Entry<KnowledgeSource, Schedule> entry = iterator.next();
                 Schedule schedule = entry.getValue();
 
@@ -50,17 +50,17 @@ public class DevelopmentPlan {
                 }
 
                 if (testDay.equals(executionEnd)) {
-                    if(schedule.getEndTime().isAfter(currentTime)) {
+                    if (schedule.getEndTime().isAfter(currentTime)) {
                         continue;
                     }
                 }
 
                 KnowledgeSource source = entry.getKey();
-                if (schedule.isSatisfyingCondition(testDay)){
+                if (schedule.isSatisfyingCondition(testDay)) {
                     students.forEach(source::tutor);
                 }
 
-                if(testDay.equals(schedule.getEndDate())){
+                if (testDay.equals(schedule.getEndDate())) {
                     iterator.remove();
                 }
             }
@@ -74,7 +74,7 @@ public class DevelopmentPlan {
         LocalDate startDay = LocalDate.now();
         for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
             LocalDate sourceStartDate = entry.getValue().getStartDate();
-            if(sourceStartDate.isBefore(startDay)){
+            if (sourceStartDate.isBefore(startDay)) {
                 startDay = sourceStartDate;
             }
         }
@@ -86,11 +86,11 @@ public class DevelopmentPlan {
         LocalDate executionEnd = LocalDate.now();
         for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
             LocalDate sourceEndDate = entry.getValue().getEndDate();
-            if(sourceEndDate.isAfter(today)){
+            if (sourceEndDate.isAfter(today)) {
                 return today;
             }
 
-            if(sourceEndDate.isBefore(executionEnd)){
+            if (sourceEndDate.isBefore(executionEnd)) {
                 executionEnd = sourceEndDate;
             }
         }

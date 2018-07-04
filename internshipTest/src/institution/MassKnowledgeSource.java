@@ -35,7 +35,7 @@ public abstract class MassKnowledgeSource implements KnowledgeSource {
 
     @Override
     public void tutor(Student student) {
-        if(isPresent(student)) {
+        if (isPresent(student)) {
             student.increaseTheoryKnowledge(theoryKnowledge);
             student.increasePracticalKnowledge(practicalKnowledge);
         }

@@ -45,26 +45,26 @@ public class Application {
 
         Schedule universitySchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
                 LocalDate.of(2018, Month.MAY, 20),
-                LocalTime.of(9,0),
+                LocalTime.of(9, 0),
                 LocalTime.of(15, 0),
                 Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(),
                         PresetConditions.SUMMER_CONDITION.getValue()));
 
         Schedule meetUpSchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
                 LocalDate.of(2017, Month.MAY, 20),
-                LocalTime.of(9,0),
+                LocalTime.of(9, 0),
                 LocalTime.of(15, 0),
                 Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(), Application::isLastThursday));
 
         Schedule internshipSchedule = new Schedule(LocalDate.of(2018, Month.JUNE, 1),
                 LocalDate.of(2018, Month.AUGUST, 25),
-                LocalTime.of(9,0),
+                LocalTime.of(9, 0),
                 LocalTime.of(18, 0),
                 PresetConditions.WORKDAY_CONDITION.getValue());
 
         Schedule studySchedule = new Schedule(LocalDate.of(2016, Month.JANUARY, 1),
                 LocalDate.of(2018, Month.DECEMBER, 31),
-                LocalTime.of(16,0),
+                LocalTime.of(16, 0),
                 LocalTime.of(18, 0),
                 new ArrayList<>());
 
@@ -83,8 +83,8 @@ public class Application {
         internship.getStudents().forEach(System.out::println);
     }
 
-    private static boolean isLastThursday(LocalDate testDay){
-        if(!testDay.getDayOfWeek().equals(DayOfWeek.THURSDAY)) {
+    private static boolean isLastThursday(LocalDate testDay) {
+        if (!testDay.getDayOfWeek().equals(DayOfWeek.THURSDAY)) {
             return false;
         }
         int monthLength = testDay.lengthOfMonth();
