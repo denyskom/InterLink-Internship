@@ -50,8 +50,8 @@ public class Application {
                 Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(),
                         PresetConditions.SUMMER_CONDITION.getValue()));
 
-        Schedule meetUpSchedule = new Schedule(LocalDate.of(2018, Month.MAY, 24),
-                LocalDate.of(2018, Month.MAY, 24),
+        Schedule meetUpSchedule = new Schedule(LocalDate.of(2018, Month.JUNE, 24),
+                LocalDate.of(2018, Month.JUNE, 28),
                 LocalTime.of(9, 0),
                 LocalTime.of(15, 0),
                 Arrays.asList(Application::isLastThursday));
@@ -91,7 +91,7 @@ public class Application {
         int monthDay = testDay.getDayOfMonth();
 
 
-        return monthLength - monthDay < 8;
+        return monthLength - monthDay < 7;
     }
 
 }
