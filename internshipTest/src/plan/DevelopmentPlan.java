@@ -2,20 +2,26 @@ package plan;
 
 import institution.KnowledgeSource;
 import person.Student;
-import person.consciousness.Knowledge;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.function.BiFunction;
+
 
 public class DevelopmentPlan {
     private Map<KnowledgeSource, Schedule> records;
     private String name;
 
+    public String getName() {
+        return name;
+    }
+
     public DevelopmentPlan(String name) {
         this.name = name;
         records = new HashMap<>();
+
+
     }
 
     public void addRecord(KnowledgeSource source, Schedule schedule) {
@@ -27,37 +33,15 @@ public class DevelopmentPlan {
     }
 
     public void executePlan(List<Student> students) {
-        LocalDate startDay = LocalDate.now();
-        LocalDateTime today = LocalDateTime.now();
-        LocalDate executionEnd = today.toLocalDate();
+        LocalTime currentTime = LocalTime.now();
+        LocalDate executionEnd = getSpecificDate(this::specifyEndDate);
+        LocalDate testDay = getSpecificDate(this::specifyStartDate);
 
-        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
-            LocalDate sourceStartDate = entry.getValue().getStartDate();
-
-            if(sourceStartDate.isBefore(startDay)){
-                startDay = sourceStartDate;
-            }
-
-        }
-        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
-            LocalDate sourceEndDate = entry.getValue().getEndDate();
-            if(sourceEndDate.isAfter(today.toLocalDate())){
-                executionEnd = LocalDate.now();
-                break;
-            }
-
-            if(sourceEndDate.isBefore(executionEnd)){
-                executionEnd = sourceEndDate;
-            }
-
-        }
-
-        LocalDate testDay = startDay;
         Map<KnowledgeSource, Schedule> recordsCopy = new HashMap<>(records);
         do {
-            Map<KnowledgeSource, Schedule> dayCopy = new HashMap<>(recordsCopy);
-
-            for (Map.Entry<KnowledgeSource, Schedule> entry : dayCopy.entrySet()){
+            Iterator<Map.Entry<KnowledgeSource, Schedule>> iterator = recordsCopy.entrySet().iterator();
+            while (iterator.hasNext()){
+                Map.Entry<KnowledgeSource, Schedule> entry = iterator.next();
                 Schedule schedule = entry.getValue();
 
                 if (testDay.isBefore(schedule.getStartDate()) ||
@@ -66,7 +50,7 @@ public class DevelopmentPlan {
                 }
 
                 if (testDay.equals(executionEnd)) {
-                    if(schedule.getEndTime().isAfter(today.toLocalTime())) {
+                    if(schedule.getEndTime().isAfter(currentTime)) {
                         continue;
                     }
                 }
@@ -77,8 +61,7 @@ public class DevelopmentPlan {
                 }
 
                 if(testDay.equals(schedule.getEndDate())){
-                    recordsCopy.remove(source);
-
+                    iterator.remove();
                 }
             }
 
@@ -86,26 +69,41 @@ public class DevelopmentPlan {
         } while (testDay.isBefore(executionEnd));
     }
 
+    private LocalDate getSpecificDate(BiFunction<Map.Entry<KnowledgeSource, Schedule>,
+                LocalDate,
+                LocalDate> dateCondition) {
+        LocalDate specificDate = LocalDate.now();
 
-    public String getScheduleForToday(Student student) {
-        StringBuilder builder = new StringBuilder(student.getName()).append("'s schedule for today:\n");
-        boolean hasRecords = false;
         for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
-            Schedule schedule = entry.getValue();
-            if(schedule.isSatisfyingCondition(LocalDate.now())) {
-                builder.append(schedule)
-                        .append(" Begins: ")
-                        .append(schedule.getStartTime())
-                        .append(" ends: ")
-                        .append(schedule.getEndTime());
-                hasRecords = true;
-            }
+            specificDate = dateCondition.apply(entry, specificDate);
         }
 
-        if(!hasRecords) {
-            return builder.append("No records").toString();
+        return specificDate;
+    }
+
+    private LocalDate specifyStartDate(Map.Entry<KnowledgeSource, Schedule> entry,
+                                  LocalDate startDay) {
+        LocalDate sourceStartDate = entry.getValue().getStartDate();
+
+        if(sourceStartDate.isBefore(startDay)){
+            startDay = sourceStartDate;
         }
 
-        return builder.toString();
+        return startDay;
+    }
+
+    private LocalDate specifyEndDate(Map.Entry<KnowledgeSource, Schedule> entry,
+                                     LocalDate executionEnd) {
+        LocalDate sourceEndDate = entry.getValue().getEndDate();
+        LocalDate today = LocalDate.now();
+        if(sourceEndDate.isAfter(today)){
+            return today;
+        }
+
+        if(sourceEndDate.isBefore(executionEnd)){
+            executionEnd = sourceEndDate;
+        }
+
+        return executionEnd;
     }
 }
