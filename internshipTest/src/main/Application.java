@@ -38,13 +38,13 @@ public class Application {
         meetUp.setPractical(true);
 
         System.out.println("List of internship's students:");
-        internship.getStudentsList().forEach(System.out::println);
+        internship.getStudents().forEach(System.out::println);
 
 
         DevelopmentPlan plan = new DevelopmentPlan("Excellent");
 
         Schedule universitySchedule = new Schedule(LocalDate.of(2016, Month.SEPTEMBER, 20),
-                LocalDate.of(2020, Month.MAY, 20),
+                LocalDate.of(2018, Month.MAY, 20),
                 LocalTime.of(9,0),
                 LocalTime.of(15, 0),
                 Arrays.asList(PresetConditions.WORKDAY_CONDITION.getValue(),
@@ -80,7 +80,7 @@ public class Application {
         internship.recruitStudents(university);
 
         System.out.println("\nList of 2 internship's students:");
-        internship.getStudentsList().forEach(System.out::println);
+        internship.getStudents().forEach(System.out::println);
     }
 
     private static boolean isLastThursday(LocalDate testDay){

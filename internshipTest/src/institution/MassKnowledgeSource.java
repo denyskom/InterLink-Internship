@@ -7,13 +7,13 @@ import java.util.List;
 
 public abstract class MassKnowledgeSource implements KnowledgeSource {
     protected String name;
-    protected List<Student> studentsList;
+    protected List<Student> students;
     protected double practicalKnowledge = 0;
     protected double theoryKnowledge = 0;
 
     public MassKnowledgeSource(String name) {
         this.name = name;
-        studentsList = new ArrayList<>();
+        students = new ArrayList<>();
     }
 
     public void setPracticalKnowledge(double practicalKnowledge) {
@@ -24,12 +24,12 @@ public abstract class MassKnowledgeSource implements KnowledgeSource {
         this.theoryKnowledge = theoryKnowledge;
     }
 
-    public List<Student> getStudentsList() {
-        return studentsList;
+    public List<Student> getStudents() {
+        return students;
     }
 
     public boolean isPresent(Student student) {
-        return studentsList.stream()
+        return students.stream()
                 .anyMatch(universityStudent -> universityStudent.getName().equals(student.getName()));
     }
 

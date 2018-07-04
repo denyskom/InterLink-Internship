@@ -28,6 +28,9 @@ public class DevelopmentPlan {
 
     public void executePlan(List<Student> students) {
         LocalDate startDay = LocalDate.now();
+        LocalDateTime today = LocalDateTime.now();
+        LocalDate executionEnd = today.toLocalDate();
+
         for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
             LocalDate sourceStartDate = entry.getValue().getStartDate();
 
@@ -36,9 +39,18 @@ public class DevelopmentPlan {
             }
 
         }
-        LocalDateTime today = LocalDateTime.now();
-        LocalDate executionEnd = today.toLocalDate();
+        for (Map.Entry<KnowledgeSource, Schedule> entry : records.entrySet()) {
+            LocalDate sourceEndDate = entry.getValue().getEndDate();
+            if(sourceEndDate.isAfter(today.toLocalDate())){
+                executionEnd = LocalDate.now();
+                break;
+            }
 
+            if(sourceEndDate.isBefore(executionEnd)){
+                executionEnd = sourceEndDate;
+            }
+
+        }
 
         LocalDate testDay = startDay;
         Map<KnowledgeSource, Schedule> recordsCopy = new HashMap<>(records);
@@ -52,7 +64,6 @@ public class DevelopmentPlan {
                         testDay.isAfter(schedule.getEndDate())) {
                     continue;
                 }
-
 
                 if (testDay.equals(executionEnd)) {
                     if(schedule.getEndTime().isAfter(today.toLocalTime())) {

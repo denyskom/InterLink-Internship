@@ -10,14 +10,14 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
 
     public University(String name) {
         super(name);
-        this.studentsList = new ArrayList<>();
+        this.students = new ArrayList<>();
         super.practicalKnowledge = 5;
         super.theoryKnowledge = 10;
     }
 
     public University(String name, double practicalKnowledge, double theoryKnowledge ) {
         super(name);
-        this.studentsList = new ArrayList<>();
+        this.students = new ArrayList<>();
         super.practicalKnowledge = practicalKnowledge;
         super.theoryKnowledge = theoryKnowledge;
     }
@@ -25,15 +25,15 @@ public class University extends MassKnowledgeSource implements KnowledgeSource {
 
 
     public void addStudent(Student student) {
-        studentsList.add(student);
+        students.add(student);
     }
 
     public String getName() {
         return name;
     }
 
-    public List<Student> getStudentsList() {
-        return studentsList;
+    public List<Student> getStudents() {
+        return students;
     }
 
 }
